@@ -16,7 +16,7 @@ const Container = () => {
     fetchDocs();
   }, []);
   return (
-    <div className='fixed h-full z-[3] flex flex-shrink-0 w-full mx-4 gap-4 overflow-scroll no-scrollbar flex-wrap mb-4 max-sm:justify-center'>
+    <div className='fixed h-full z-[3] flex flex-shrink-0 w-full mx-4 gap-4 overflow-scroll no-scrollbar flex-wrap mb-4 max-sm:justify-center max-sm:mx-4'>
       {docs.map((doc) => (
         <Card
           key={doc.id}
