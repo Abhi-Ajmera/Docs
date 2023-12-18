@@ -23,7 +23,7 @@ const Container = () => {
       {docs.map((doc) => (
         <Card
           key={doc.id}
-          doc={doc}
+          data={doc}
         />
       ))}
     </div>

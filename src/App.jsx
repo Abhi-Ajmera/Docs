@@ -8,7 +8,6 @@ import Add from './components/Add';
 
 function App() {
   const [open, setOpen] = useState(false);
-
   return (
     <div className='relative w-full h-screen bg-slate-800'>
       <Background />

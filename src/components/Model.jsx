@@ -17,7 +17,6 @@ const Model = ({ open, setOpen }) => {
         isCompleted: false,
       });
       setOpen(false);
-      alert('Saved Successfully');
       resetForm();
     },
   });
