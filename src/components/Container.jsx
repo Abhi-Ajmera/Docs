@@ -4,27 +4,28 @@ import { db } from './../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 
 const Container = () => {
-  const [data, setData] = useState([]);
+  const [docs, setDocs] = useState([]);
   async function fetchData() {
     const querySnapshot = await getDocs(collection(db, '/Docs'));
-    querySnapshot.map((doc) => {
-      setData({ id: doc.id, ...doc.data() });
+    let newData = [];
+    querySnapshot.forEach((doc) => {
+      newData.push({ id: doc.id, ...doc.data() });
     });
+    setDocs(newData);
   }
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  console.log(data);
   return (
     <div className='fixed h-full z-[3] flex flex-shrink-0 w-full mx-4 gap-4 overflow-scroll no-scrollbar flex-wrap mb-4 max-sm:justify-center max-sm:mx-0'>
-      {/* {data.map((doc) => (
+      {docs.map((doc) => (
         <Card
-          key={data.id}
+          key={doc.id}
           doc={doc}
         />
-      ))} */}
+      ))}
     </div>
   );
 };
