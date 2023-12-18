@@ -1,28 +1,30 @@
 import Card from './Card';
 import { useEffect, useState } from 'react';
+import { db } from './../firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 const Container = () => {
-  const [docs, setDocs] = useState([]);
+  const [data, setData] = useState([]);
+  async function fetchData() {
+    const querySnapshot = await getDocs(collection(db, '/Docs'));
+    querySnapshot.map((doc) => {
+      setData({ id: doc.id, ...doc.data() });
+    });
+  }
 
   useEffect(() => {
-    async function fetchDocs() {
-      await fetch('https://6564c6a6ceac41c0761ecb3b.mockapi.io/Docs')
-        .then((res) => res.json())
-        .then((data) => setDocs(data))
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    fetchDocs();
+    fetchData();
   }, []);
+
+  console.log(data);
   return (
     <div className='fixed h-full z-[3] flex flex-shrink-0 w-full mx-4 gap-4 overflow-scroll no-scrollbar flex-wrap mb-4 max-sm:justify-center max-sm:mx-0'>
-      {docs.map((doc) => (
+      {/* {data.map((doc) => (
         <Card
-          key={doc.id}
+          key={data.id}
           doc={doc}
         />
-      ))}
+      ))} */}
     </div>
   );
 };
