@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import { XCircleIcon } from '@heroicons/react/24/outline';
 import { useDispatch } from 'react-redux';
-import { addDocumentToFirestore } from '../features/docsSlice';
+import { addDocument } from '../features/docsSlice';
 
 const Model = ({ open, setOpen }) => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const Model = ({ open, setOpen }) => {
     },
     onSubmit: ({ title, notes }, { resetForm }) => {
       dispatch(
-        addDocumentToFirestore({
+        addDocument({
           title,
           notes,
           isCompleted: 'false',

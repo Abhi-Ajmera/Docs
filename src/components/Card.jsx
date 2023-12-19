@@ -2,11 +2,14 @@ import { XCircleIcon } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
 import { FaCheck } from 'react-icons/fa';
 import { db } from '../firebase';
-import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
+import { useDispatch } from 'react-redux';
+import { deleteDocument } from '../features/docsSlice';
 
 const Card = ({ data }) => {
-  const handleDelete = async (id) => {
-    await deleteDoc(doc(db, 'Docs', id));
+  const dispatch = useDispatch();
+  const handleDelete = (id) => {
+    dispatch(deleteDocument(id));
   };
 
   const handleUpdate = async (id, isCompleted) => {

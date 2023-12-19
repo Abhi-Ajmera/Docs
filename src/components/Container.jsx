@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import Card from './Card';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchDocumentToFirestore } from '../features/docsSlice';
+import { fetchDocument } from '../features/docsSlice';
 
 const Container = () => {
   const docs = useSelector((state) => state.Documents.DocsArray);
-  console.log(docs);
+  // console.log(docs);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchDocumentToFirestore());
+    dispatch(fetchDocument());
   }, [dispatch]);
 
   return (

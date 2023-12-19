@@ -1,17 +1,28 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { db } from '../firebase';
-import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
 
-export const addDocumentToFirestore = createAsyncThunk('Docs/addDocument', async ({ title, notes, isCompleted }) => {
+// add Documents
+export const addDocument = createAsyncThunk('Docs/addDoc', async ({ title, notes, isCompleted }) => {
   const docRef = await addDoc(collection(db, '/Docs'), { title, notes, isCompleted });
   const newDoc = { id: docRef.id, title, notes, isCompleted };
   return newDoc;
 });
 
-export const fetchDocumentToFirestore = createAsyncThunk('Docs/fetchDocument', async () => {
-  const query = await getDocs(collection(db, '/Docs'));
-  const docs = query.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  return docs;
+// fetch Documets
+export const fetchDocument = createAsyncThunk('Docs/fetchDoc', async () => {
+  const querySnapshot = await getDocs(collection(db, '/Docs'));
+  let newData = [];
+  querySnapshot.forEach((doc) => {
+    newData.push({ id: doc.id, ...doc.data() });
+  });
+  return newData;
+});
+
+// Delete document
+export const deleteDocument = createAsyncThunk('Docs/deleteDoc', async (id) => {
+  await deleteDoc(doc(db, 'Docs', id));
+  return id;
 });
 
 export const docsSlice = createSlice({
@@ -21,11 +32,14 @@ export const docsSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(addDocumentToFirestore.fulfilled, (state, action) => {
+    builder.addCase(addDocument.fulfilled, (state, action) => {
       state.DocsArray.push(action.payload);
     });
-    builder.addCase(fetchDocumentToFirestore.fulfilled, (state, action) => {
+    builder.addCase(fetchDocument.fulfilled, (state, action) => {
       state.DocsArray = action.payload;
+    });
+    builder.addCase(deleteDocument.fulfilled, (state, action) => {
+      state.DocsArray = state.DocsArray.filter((book) => book.id !== action.payload);
     });
   },
 });
