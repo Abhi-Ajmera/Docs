@@ -10,8 +10,8 @@ const Model = ({ open, setOpen }) => {
       notes: '',
     },
     onSubmit: async ({ title, notes }, { resetForm }) => {
-      const citiesRef = collection(db, '/Docs');
-      await addDoc(citiesRef, {
+      const docRef = collection(db, '/Docs');
+      await addDoc(docRef, {
         title,
         notes,
         isCompleted: false,
