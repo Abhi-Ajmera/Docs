@@ -1,23 +1,25 @@
 import { useFormik } from 'formik';
-import { db } from './../firebase/index';
-import { collection, addDoc } from 'firebase/firestore';
 import { XCircleIcon } from '@heroicons/react/24/outline';
+import { useDispatch } from 'react-redux';
+import { addDocumentToFirestore } from '../features/docsSlice';
 
 const Model = ({ open, setOpen }) => {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       title: '',
       notes: '',
     },
-    onSubmit: async ({ title, notes }, { resetForm }) => {
-      const citiesRef = collection(db, '/Docs');
-      await addDoc(citiesRef, {
-        title,
-        notes,
-        isCompleted: false,
-      });
-      setOpen(false);
-      resetForm();
+    onSubmit: ({ title, notes }, { resetForm }) => {
+      dispatch(
+        addDocumentToFirestore({
+          title,
+          notes,
+          isCompleted: 'false',
+        })
+      ),
+        setOpen(false),
+        resetForm();
     },
   });
 
