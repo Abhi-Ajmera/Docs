@@ -1,10 +1,8 @@
 import { XCircleIcon } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
 import { FaCheck } from 'react-icons/fa';
-import { db } from '../firebase';
-import { doc, updateDoc } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
-import { deleteDocument } from '../features/docsSlice';
+import { deleteDocument, updateDocument } from '../features/docsSlice';
 
 const Card = ({ data }) => {
   const dispatch = useDispatch();
@@ -13,9 +11,7 @@ const Card = ({ data }) => {
   };
 
   const handleUpdate = async (id, isCompleted) => {
-    await updateDoc(doc(db, 'Docs', id), {
-      isCompleted: isCompleted === true ? false : true,
-    });
+    dispatch(updateDocument(id, isCompleted));
   };
 
   return (
