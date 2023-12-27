@@ -4,12 +4,11 @@ import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_Firebase_API_key,
-  authDomain: 'docs-8d285.firebaseapp.com',
-  projectId: 'docs-8d285',
-  storageBucket: 'docs-8d285.appspot.com',
-  messagingSenderId: '181960502847',
-  appId: '1:181960502847:web:fa425b97c95f7a69db928a',
-  measurementId: 'G-Y32ZKFPFEW',
+  authDomain: 'docs-eab7c.firebaseapp.com',
+  projectId: 'docs-eab7c',
+  storageBucket: 'docs-eab7c.appspot.com',
+  messagingSenderId: '416526714876',
+  appId: '1:416526714876:web:a3b4a2434a167e71af5479',
 };
 
 const app = initializeApp(firebaseConfig);
