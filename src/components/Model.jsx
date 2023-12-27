@@ -2,14 +2,16 @@ import { useFormik } from 'formik';
 import { db } from './../firebase/index';
 import { collection, addDoc } from 'firebase/firestore';
 import { XCircleIcon } from '@heroicons/react/24/outline';
+import JoditEditor from 'jodit-react';
+import { useState } from 'react';
 
 const Model = ({ open, setOpen }) => {
+  const [notes, setNotes] = useState();
   const formik = useFormik({
     initialValues: {
       title: '',
-      notes: '',
     },
-    onSubmit: async ({ title, notes }, { resetForm }) => {
+    onSubmit: async ({ title }, { resetForm }) => {
       const docRef = collection(db, '/Docs');
       await addDoc(docRef, {
         title,
@@ -17,6 +19,7 @@ const Model = ({ open, setOpen }) => {
         isCompleted: false,
       });
       setOpen(false);
+      setNotes('');
       resetForm();
     },
   });
@@ -50,16 +53,12 @@ const Model = ({ open, setOpen }) => {
           required
           className='block w-full rounded-md border-0 py-1.5 px-1.5 text-white bg-gray-800 ring-1 ring-inset ring-gray-300 placeholder:text-white focus:ring-2 focus:ring-inset'
         />
-        <textarea
-          name='notes'
-          onChange={formik.handleChange}
-          value={formik.values.notes}
+        <JoditEditor
+          onChange={(e) => setNotes(e)}
+          value={notes}
           required
-          placeholder='Notes'
-          className='block w-full rounded-md border-0 py-1.5 px-1.5 text-white bg-gray-800 ring-1 ring-inset ring-gray-300 placeholder:text-white focus:ring-2 focus:ring-inset h-[200px]'
-        >
-          {formik.values.notes}
-        </textarea>
+          className='block w-full rounded-md border-0 py-1.5 px-1.5 text-black ring-1 ring-inset ring-gray-300 placeholder:text-white focus:ring-2 focus:ring-inset'
+        />
 
         <button
           type='submit'
