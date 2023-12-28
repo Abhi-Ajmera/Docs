@@ -58,7 +58,7 @@ const Model = ({ open, setOpen, fetchData }) => {
           onChange={(e) => setNotes(e)}
           value={notes}
           required
-          className='block w-full rounded-md border-0 py-1.5 px-1.5 text-black ring-1 ring-inset ring-gray-300 placeholder:text-white focus:ring-2 focus:ring-inset'
+          className='text-black'
         />
 
         <button
