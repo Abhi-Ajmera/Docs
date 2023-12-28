@@ -5,15 +5,17 @@ import { db } from '../firebase';
 import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import parse from 'html-react-parser';
 
-const Card = ({ data }) => {
+const Card = ({ data, fetchData }) => {
   const handleDelete = async (id) => {
     await deleteDoc(doc(db, 'Docs', id));
+    fetchData();
   };
 
   const handleUpdate = async (id, isCompleted) => {
     await updateDoc(doc(db, 'Docs', id), {
       isCompleted: isCompleted === true ? false : true,
     });
+    fetchData();
   };
 
   return (
@@ -32,7 +34,7 @@ const Card = ({ data }) => {
       <div className='flex gap-2 justify-center items-center border-b-2 pb-1'>
         <p className='text-xl font-medium'>{data.title}</p>
       </div>
-      <p className='text-justify text-xs mt-3 font-medium leading-tight'>{parse(data.notes)}</p>
+      <div className='text-justify text-xs mt-3 font-medium leading-tight'>{parse(data.notes)}</div>
       <div
         onClick={() => handleUpdate(data.id, data.isCompleted)}
         className={`w-full absolute left-0 hover:cursor-pointer bottom-0 h-10 flex justify-center gap-2 items-center ${

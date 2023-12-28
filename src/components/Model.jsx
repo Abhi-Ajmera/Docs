@@ -5,7 +5,7 @@ import { XCircleIcon } from '@heroicons/react/24/outline';
 import JoditEditor from 'jodit-react';
 import { useState } from 'react';
 
-const Model = ({ open, setOpen }) => {
+const Model = ({ open, setOpen, fetchData }) => {
   const [notes, setNotes] = useState();
   const formik = useFormik({
     initialValues: {
@@ -21,6 +21,7 @@ const Model = ({ open, setOpen }) => {
       setOpen(false);
       setNotes('');
       resetForm();
+      fetchData();
     },
   });
 
