@@ -43,7 +43,7 @@ const Card = ({ data, fetchData }) => {
       >
         {!data.isCompleted && <FaCheck size={12} />}
         {!data.isCompleted ? (
-          <button className='text-sm'>Mark as Read</button>
+          <button className='text-sm'>Mark as Done</button>
         ) : (
           <button className='text-sm'>Completed</button>
         )}
